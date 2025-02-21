@@ -13,6 +13,10 @@ github.com/makiuchi-d/gozxing/common
 github.com/makiuchi-d/gozxing/common/detector
 github.com/makiuchi-d/gozxing/common/reedsolomon
 github.com/makiuchi-d/gozxing/common/util
+# github.com/skrushinsky/scaliger v0.0.4
+## explicit; go 1.21
+github.com/skrushinsky/scaliger/julian
+github.com/skrushinsky/scaliger/mathutils
 # golang.org/x/text v0.3.7
 ## explicit; go 1.17
 golang.org/x/text/encoding

@@ -9,16 +9,16 @@ func TestParseBCBP(t *testing.T) {
 
 	tests := map[string]*BCBP{
 		/*
-		"M1DOE/JOHN            EXYZ123 MELSFOUA 61   047C012D0001 100": &BCBP{
-			FormatCode:                 "M",
-			PassengerName:              "DOE/JOHN",
-			OperatingCarrierPNR:        "XYZ123",
-			FromAirport:                "MEL",
-			ToAirport:                  "SFO",
-			OperatingCarrierDesignator: "UA",
-			FlightNumber:               "61   ", // Note the trailing white space, TBD...
-		},
-		*/		
+			"M1DOE/JOHN            EXYZ123 MELSFOUA 61   047C012D0001 100": &BCBP{
+				FormatCode:                 "M",
+				PassengerName:              "DOE/JOHN",
+				OperatingCarrierPNR:        "XYZ123",
+				FromAirport:                "MEL",
+				ToAirport:                  "SFO",
+				OperatingCarrierDesignator: "UA",
+				FlightNumber:               "61   ", // Note the trailing white space, TBD...
+			},
+		*/
 		"M1DESMARAIS/LUC       EABC123 YULFRAAC 0834 226F001A0025 1": &BCBP{
 			FormatCode:                 "M",
 			PassengerName:              "DESMARAIS/LUC",
