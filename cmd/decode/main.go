@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"log"
 	"os"
 
@@ -33,6 +34,10 @@ import (
 
 func main() {
 
+	var format string
+
+	flag.StringVar(&format, "format", "string", "")
+
 	flag.Parse()
 
 	for _, path := range flag.Args() {
@@ -51,11 +56,18 @@ func main() {
 			log.Fatal(err)
 		}
 
-		enc := json.NewEncoder(os.Stdout)
-		err = enc.Encode(b)
+		switch format {
+		case "json":
 
-		if err != nil {
-			log.Fatal(err)
+			enc := json.NewEncoder(os.Stdout)
+			err = enc.Encode(b)
+
+			if err != nil {
+				log.Fatal(err)
+			}
+
+		default:
+			fmt.Println(b.String())
 		}
 	}
 

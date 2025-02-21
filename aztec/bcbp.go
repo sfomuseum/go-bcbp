@@ -13,11 +13,21 @@ import (
 	"github.com/sfomuseum/go-bcbp"
 )
 
+/*
+
+> go run cmd/encode/main.go -data 'M1DOE/JOHN            EXYZ123 MELSFOUA 61   047C012D0001 1'
+[asc][asc@SD-931-4][8:38:04] /Users/asc/sfomuseum/go-bcbp                                                                                                                                                 > open barcode.png
+[asc][asc@SD-931-4][8:38:06] /Users/asc/sfomuseum/go-bcbp                                                                                                                                                 > go run cmd/decode/main.go ./barcode.png
+2025/02/21 08:38:18 Failed to decode barcode, NotFoundException: NotFoundException: NotFoundException: nbCenterLayers = 3
+exit status 1
+
+*/
+
 func Marshal(b *bcbp.BCBP, wr io.Writer) error {
 
 	data := []byte(b.String())
 
-	bc, err := bc_aztec.Encode(data, 1, 1)
+	bc, err := bc_aztec.Encode(data, 33, 15)
 
 	if err != nil {
 		return fmt.Errorf("Failed to encode barcode, %w", err)
