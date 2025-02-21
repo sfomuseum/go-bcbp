@@ -4,15 +4,29 @@ import (
 	"fmt"
 	"image"
 	_ "image/jpeg"
-	_ "image/png"
+	"image/png"
 	"io"
 
+	bc_aztec "github.com/boombuler/barcode/aztec"
 	"github.com/makiuchi-d/gozxing"
 	"github.com/makiuchi-d/gozxing/aztec"
 	"github.com/sfomuseum/go-bcbp"
 )
 
-func Parse(r io.Reader) (*bcbp.BCBP, error) {
+func Marshal(b *bcbp.BCBP, wr io.Writer) error {
+
+	data := []byte(b.String())
+
+	bc, err := bc_aztec.Encode(data, 1, 1)
+
+	if err != nil {
+		return fmt.Errorf("Failed to encode barcode, %w", err)
+	}
+
+	return png.Encode(wr, bc)
+}
+
+func Unmarshal(r io.Reader) (*bcbp.BCBP, error) {
 
 	im, _, err := image.Decode(r)
 

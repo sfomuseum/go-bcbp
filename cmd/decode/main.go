@@ -45,7 +45,7 @@ func main() {
 
 		defer r.Close()
 
-		b, err := aztec.Parse(r)
+		b, err := aztec.Unmarshal(r)
 
 		if err != nil {
 			log.Fatal(err)
