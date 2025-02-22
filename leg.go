@@ -58,6 +58,7 @@ func (l *Leg) String() string {
 		leftPad(l.CheckInSequenceNumber, "0", CHECK_IN_SEQUENCE_NUMBER),
 		l.PassengerStatus,
 		leftPad(l.OptionalDataSize, "0", OPTIONAL_DATA_SIZE),
+		l.OptionalData,
 	}
 
 	return strings.Join(parts, "")
@@ -81,6 +82,13 @@ func ParseLeg(raw string) (*Leg, error) {
 		CheckInSequenceNumber:      strings.TrimLeft(getField(raw, CHECK_IN_SEQUENCE_NUMBER_OFFSET, CHECK_IN_SEQUENCE_NUMBER), "0"),
 		PassengerStatus:            getField(raw, PASSENGER_STATUS_OFFSET, PASSENGER_STATUS),
 		OptionalDataSize:           getField(raw, OPTIONAL_DATA_SIZE_OFFSET, OPTIONAL_DATA_SIZE),
+	}
+
+	// Note: There is apparently no requirement that the length of the optional data match
+	// the value of the optional data size field
+
+	if len(raw) > 60 {
+		leg.OptionalData = raw[60:len(raw)]
 	}
 
 	return leg, nil

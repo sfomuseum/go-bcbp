@@ -2,6 +2,8 @@ package bcbp
 
 import (
 	"fmt"
+	"log/slog"
+	"strconv"
 	"strings"
 )
 
@@ -22,10 +24,26 @@ func (b *BCBP) String() string {
 	return strings.Join(parts, string(GROUP_SEPARATOR))
 }
 
-func Parse(raw string) (*BCBP, error) {
+func Unmarshal(raw string) (*BCBP, error) {
+
+	if string(raw[0]) != "M" {
+		return nil, fmt.Errorf("BCBP string must start with M")
+	}
+
+	str_count := string(raw[1])
+	count, err := strconv.Atoi(str_count)
+
+	if err != nil {
+		return nil, fmt.Errorf("Failed to parse M (leg) count '%s', %w", str_count, err)
+	}
 
 	parts := strings.Split(raw, string(GROUP_SEPARATOR))
 	legs := make([]*Leg, len(parts))
+
+	if count != len(legs) {
+		slog.Warn("BCBP length does not match M count.", "expected", count, "have", len(legs))
+		return nil, fmt.Errorf("M count mismatch and liberal parsing not implemented yet")
+	}
 
 	for idx, leg_raw := range parts {
 
@@ -43,4 +61,8 @@ func Parse(raw string) (*BCBP, error) {
 	}
 
 	return b, nil
+}
+
+func Marshal(b *BCBP) string {
+	return b.String()
 }

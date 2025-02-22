@@ -17,7 +17,7 @@ func main() {
 
 	flag.Parse()
 
-	b, err := bcbp.Parse(data)
+	b, err := bcbp.Unmarshal(data)
 
 	if err != nil {
 		log.Fatal(err)

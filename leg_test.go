@@ -9,31 +9,40 @@ func TestParseLeg(t *testing.T) {
 
 	tests := map[string]*Leg{
 		"M1DOE/JOHN            EXYZ123 MELSFOUA 61   047C012D0001 100": &Leg{
-			FormatCode:                 "M",
 			PassengerName:              "DOE/JOHN",
 			OperatingCarrierPNR:        "XYZ123",
 			FromAirport:                "MEL",
 			ToAirport:                  "SFO",
 			OperatingCarrierDesignator: "UA",
 			FlightNumber:               "61   ", // Note the trailing white space, TBD...
+			OptionalData:               "",
 		},
 		"M1DESMARAIS/LUC       EABC123 YULFRAAC 0834 226F001A0025 100": &Leg{
-			FormatCode:                 "M",
 			PassengerName:              "DESMARAIS/LUC",
 			OperatingCarrierPNR:        "ABC123",
 			FromAirport:                "YUL",
 			ToAirport:                  "FRA",
 			OperatingCarrierDesignator: "AC",
 			FlightNumber:               "834 ", // Note the trailing white space, TBD...
+			OptionalData:               "",
 		},
-		"M1EWING/SHAUN MR      E1A11A1 BNESYDQF 0551 107Y026J0037 000": &Leg{
-			FormatCode:                 "M",
+		"M1EWING/SHAUN MR      E1A11A1 BNESYDQF 0551 107Y026J0037 000>Test": &Leg{
 			PassengerName:              "EWING/SHAUN MR",
 			OperatingCarrierPNR:        "1A11A1",
 			FromAirport:                "BNE",
 			ToAirport:                  "SYD",
 			OperatingCarrierDesignator: "QF",
 			FlightNumber:               "551 ", // Note the trailing white space, TBD...
+			OptionalData:               ">Test",
+		},
+		"M1GRANDMAIRE/MELANIE  EABC123 GVACDGAF 0123 339C002F0025 130>5002A0571234567890  AF AF 1234567890123456    Y^108ABCDEFGH": &Leg{
+			PassengerName:              "GRANDMAIRE/MELANIE",
+			OperatingCarrierPNR:        "ABC123",
+			FromAirport:                "GVA",
+			ToAirport:                  "CDG",
+			OperatingCarrierDesignator: "AF",
+			FlightNumber:               "123 ", // Note the trailing white space, TBD...
+			OptionalData:               ">5002A0571234567890  AF AF 1234567890123456    Y^108ABCDEFGH",
 		},
 	}
 

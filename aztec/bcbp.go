@@ -58,5 +58,5 @@ func Unmarshal(r io.Reader) (*bcbp.BCBP, error) {
 		return nil, fmt.Errorf("Failed to decode barcode, %w", err)
 	}
 
-	return bcbp.Parse(rsp.GetText())
+	return bcbp.Unmarshal(rsp.GetText())
 }
