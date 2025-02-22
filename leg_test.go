@@ -5,21 +5,19 @@ import (
 	"testing"
 )
 
-func TestParseBCBP(t *testing.T) {
+func TestParseLeg(t *testing.T) {
 
-	tests := map[string]*BCBP{
-		/*
-			"M1DOE/JOHN            EXYZ123 MELSFOUA 61   047C012D0001 100": &BCBP{
-				FormatCode:                 "M",
-				PassengerName:              "DOE/JOHN",
-				OperatingCarrierPNR:        "XYZ123",
-				FromAirport:                "MEL",
-				ToAirport:                  "SFO",
-				OperatingCarrierDesignator: "UA",
-				FlightNumber:               "61   ", // Note the trailing white space, TBD...
-			},
-		*/
-		"M1DESMARAIS/LUC       EABC123 YULFRAAC 0834 226F001A0025 1": &BCBP{
+	tests := map[string]*Leg{
+		"M1DOE/JOHN            EXYZ123 MELSFOUA 61   047C012D0001 100": &Leg{
+			FormatCode:                 "M",
+			PassengerName:              "DOE/JOHN",
+			OperatingCarrierPNR:        "XYZ123",
+			FromAirport:                "MEL",
+			ToAirport:                  "SFO",
+			OperatingCarrierDesignator: "UA",
+			FlightNumber:               "61   ", // Note the trailing white space, TBD...
+		},
+		"M1DESMARAIS/LUC       EABC123 YULFRAAC 0834 226F001A0025 100": &Leg{
 			FormatCode:                 "M",
 			PassengerName:              "DESMARAIS/LUC",
 			OperatingCarrierPNR:        "ABC123",
@@ -28,7 +26,7 @@ func TestParseBCBP(t *testing.T) {
 			OperatingCarrierDesignator: "AC",
 			FlightNumber:               "834 ", // Note the trailing white space, TBD...
 		},
-		"M1EWING/SHAUN MR      E1A11A1 BNESYDQF 0551 107Y026J0037 0": &BCBP{
+		"M1EWING/SHAUN MR      E1A11A1 BNESYDQF 0551 107Y026J0037 000": &Leg{
 			FormatCode:                 "M",
 			PassengerName:              "EWING/SHAUN MR",
 			OperatingCarrierPNR:        "1A11A1",
@@ -39,41 +37,42 @@ func TestParseBCBP(t *testing.T) {
 		},
 	}
 
-	for str_bcbp, expected := range tests {
+	for str_leg, expected := range tests {
 
-		fmt.Println(len(str_bcbp), str_bcbp)
-		b, err := Parse(str_bcbp)
+		fmt.Println(len(str_leg), str_leg)
+
+		leg, err := ParseLeg(str_leg)
 
 		if err != nil {
-			t.Fatalf("Failed to parse '%s', %v", str_bcbp, err)
+			t.Fatalf("Failed to parse '%s', %v", str_leg, err)
 		}
 
-		if b.PassengerName != expected.PassengerName {
-			t.Fatalf("Invalid passenger name. Expected '%s', got '%s'", expected.PassengerName, b.PassengerName)
+		if leg.PassengerName != expected.PassengerName {
+			t.Fatalf("Invalid passenger name. Expected '%s', got '%s'", expected.PassengerName, leg.PassengerName)
 		}
 
-		if b.OperatingCarrierPNR != expected.OperatingCarrierPNR {
-			t.Fatalf("Invalid PNR. Expected '%s', got '%s'", expected.OperatingCarrierPNR, b.OperatingCarrierPNR)
+		if leg.OperatingCarrierPNR != expected.OperatingCarrierPNR {
+			t.Fatalf("Invalid PNR. Expected '%s', got '%s'", expected.OperatingCarrierPNR, leg.OperatingCarrierPNR)
 		}
 
-		if b.FromAirport != expected.FromAirport {
-			t.Fatalf("Invalid origin airport. Expected '%s', got '%s'", expected.FromAirport, b.FromAirport)
+		if leg.FromAirport != expected.FromAirport {
+			t.Fatalf("Invalid origin airport. Expected '%s', got '%s'", expected.FromAirport, leg.FromAirport)
 		}
 
-		if b.ToAirport != expected.ToAirport {
-			t.Fatalf("Invalid destination airport. Expected '%s', got '%s'", expected.ToAirport, b.ToAirport)
+		if leg.ToAirport != expected.ToAirport {
+			t.Fatalf("Invalid destination airport. Expected '%s', got '%s'", expected.ToAirport, leg.ToAirport)
 		}
 
-		if b.OperatingCarrierDesignator != expected.OperatingCarrierDesignator {
-			t.Fatalf("Invalid airline. Expected '%s', got '%s'", expected.OperatingCarrierDesignator, b.OperatingCarrierDesignator)
+		if leg.OperatingCarrierDesignator != expected.OperatingCarrierDesignator {
+			t.Fatalf("Invalid airline. Expected '%s', got '%s'", expected.OperatingCarrierDesignator, leg.OperatingCarrierDesignator)
 		}
 
-		if b.FlightNumber != expected.FlightNumber {
-			t.Fatalf("Invalid flight number. Expected '%s', got '%s'", expected.FlightNumber, b.FlightNumber)
+		if leg.FlightNumber != expected.FlightNumber {
+			t.Fatalf("Invalid flight number. Expected '%s', got '%s'", expected.FlightNumber, leg.FlightNumber)
 		}
 
-		if b.String() != str_bcbp {
-			t.Fatalf("String value of parsed BCBP string ('%s') does not match: '%s'", str_bcbp, b.String())
+		if leg.String() != str_leg {
+			t.Fatalf("String value of parsed Leg string ('%s') does not match: '%s'", str_leg, leg.String())
 		}
 	}
 }
