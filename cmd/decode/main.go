@@ -1,13 +1,15 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 
-	"github.com/sfomuseum/go-bcbp/aztec"
+	"github.com/sfomuseum/go-bcbp"
+	_ "github.com/sfomuseum/go-bcbp/aztec"
 )
 
 /*
@@ -34,11 +36,21 @@ import (
 
 func main() {
 
+	var barcode_uri string
 	var format string
 
+	flag.StringVar(&barcode_uri, "barcode_uri", "aztec://", "...")
 	flag.StringVar(&format, "format", "string", "")
 
 	flag.Parse()
+
+	ctx := context.Background()
+
+	bc, err := bcbp.NewBarcode(ctx, barcode_uri)
+
+	if err != nil {
+		log.Fatalf("Failed to create barcode, %v", err)
+	}
 
 	for _, path := range flag.Args() {
 
@@ -50,7 +62,7 @@ func main() {
 
 		defer r.Close()
 
-		b, err := aztec.Unmarshal(r)
+		bcbp_data, err := bc.Decode(r)
 
 		if err != nil {
 			log.Fatal(err)
@@ -60,14 +72,14 @@ func main() {
 		case "json":
 
 			enc := json.NewEncoder(os.Stdout)
-			err = enc.Encode(b)
+			err = enc.Encode(bcbp_data)
 
 			if err != nil {
 				log.Fatal(err)
 			}
 
 		default:
-			fmt.Println(b.String())
+			fmt.Println(bcbp_data.String())
 		}
 	}
 

@@ -1,23 +1,34 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"log"
 	"os"
 
 	"github.com/sfomuseum/go-bcbp"
-	"github.com/sfomuseum/go-bcbp/aztec"
+	_ "github.com/sfomuseum/go-bcbp/aztec"
 )
 
 func main() {
 
+	var barcode_uri string
 	var path string
 	var data string
 
-	flag.StringVar(&path, "path", "barcode.png", "")
-	flag.StringVar(&data, "data", "", "")
+	flag.StringVar(&barcode_uri, "barcode_uri", "aztec://", "...")
+	flag.StringVar(&path, "path", "barcode.png", "...")
+	flag.StringVar(&data, "data", "", "...")
 
 	flag.Parse()
+
+	ctx := context.Background()
+
+	bc, err := bcbp.NewBarcode(ctx, barcode_uri)
+
+	if err != nil {
+		log.Fatalf("Failed to create barcode, %v", err)
+	}
 
 	b, err := bcbp.Unmarshal(data)
 
@@ -31,7 +42,7 @@ func main() {
 		log.Fatalf("Failed to open %s for writing, %v", path, err)
 	}
 
-	err = aztec.Marshal(b, wr)
+	err = bc.Encode(b, wr)
 
 	if err != nil {
 		log.Fatalf("Failed to marshal data, %v", err)
