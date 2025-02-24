@@ -11,8 +11,11 @@ import (
 	"github.com/aaronland/go-roster"
 )
 
+// Barcode defines a common interface for working with BCBP barcodes
 type Barcode interface {
+	// Encoded `BCBP` data as a PNG image to a `io.Writer` instance
 	Encode(*BCBP, io.Writer) error
+	// Decode image data contained in an `io.Reader` instance as a `BCBP` instance.
 	Decode(io.Reader) (*BCBP, error)
 }
 

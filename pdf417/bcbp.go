@@ -9,7 +9,7 @@ import (
 	_ "image/jpeg"
 	"image/png"
 	"io"
-	
+
 	"github.com/boombuler/barcode"
 	bc_pdf417 "github.com/boombuler/barcode/pdf417"
 	"github.com/sfomuseum/go-bcbp"
@@ -39,10 +39,10 @@ func Unmarshal(r io.Reader) (*bcbp.BCBP, error) {
 	return nil, fmt.Errorf("Not implemented")
 
 	/*
-	im, _, err := image.Decode(r)
+		im, _, err := image.Decode(r)
 
-	if err != nil {
-		return nil, err
-	}
+		if err != nil {
+			return nil, err
+		}
 	*/
 }

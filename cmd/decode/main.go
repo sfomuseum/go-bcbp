@@ -10,7 +10,7 @@ import (
 
 	"github.com/sfomuseum/go-bcbp"
 	_ "github.com/sfomuseum/go-bcbp/aztec"
-	_ "github.com/sfomuseum/go-bcbp/pdf417"	
+	_ "github.com/sfomuseum/go-bcbp/pdf417"
 )
 
 /*
