@@ -1,12 +1,15 @@
 package pdf417
 
+// https://en.wikipedia.org/wiki/PDF417
+// https://github.com/sparkfish/pdf417decoder
+
 import (
 	"fmt"
 	_ "image"
 	_ "image/jpeg"
 	"image/png"
 	"io"
-
+	
 	"github.com/boombuler/barcode"
 	bc_pdf417 "github.com/boombuler/barcode/pdf417"
 	"github.com/sfomuseum/go-bcbp"
@@ -34,4 +37,12 @@ func Marshal(b *bcbp.BCBP, wr io.Writer) error {
 func Unmarshal(r io.Reader) (*bcbp.BCBP, error) {
 
 	return nil, fmt.Errorf("Not implemented")
+
+	/*
+	im, _, err := image.Decode(r)
+
+	if err != nil {
+		return nil, err
+	}
+	*/
 }

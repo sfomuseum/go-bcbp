@@ -10,6 +10,7 @@ import (
 
 	"github.com/sfomuseum/go-bcbp"
 	_ "github.com/sfomuseum/go-bcbp/aztec"
+	_ "github.com/sfomuseum/go-bcbp/pdf417"	
 )
 
 /*
@@ -39,7 +40,7 @@ func main() {
 	var barcode_uri string
 	var format string
 
-	flag.StringVar(&barcode_uri, "barcode_uri", "aztec://", "...")
+	flag.StringVar(&barcode_uri, "barcode-uri", "aztec://", "...")
 	flag.StringVar(&format, "format", "string", "")
 
 	flag.Parse()
