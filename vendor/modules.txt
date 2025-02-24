@@ -5,6 +5,7 @@ github.com/aaronland/go-roster
 ## explicit
 github.com/boombuler/barcode
 github.com/boombuler/barcode/aztec
+github.com/boombuler/barcode/pdf417
 github.com/boombuler/barcode/utils
 # github.com/makiuchi-d/gozxing v0.1.1
 ## explicit; go 1.17

@@ -8,6 +8,7 @@ import (
 
 	"github.com/sfomuseum/go-bcbp"
 	_ "github.com/sfomuseum/go-bcbp/aztec"
+	_ "github.com/sfomuseum/go-bcbp/pdf417"	
 )
 
 func main() {
@@ -16,7 +17,7 @@ func main() {
 	var path string
 	var data string
 
-	flag.StringVar(&barcode_uri, "barcode_uri", "aztec://", "...")
+	flag.StringVar(&barcode_uri, "barcode-uri", "aztec://", "...")
 	flag.StringVar(&path, "path", "barcode.png", "...")
 	flag.StringVar(&data, "data", "", "...")
 
