@@ -1,5 +1,7 @@
 package aztec
 
+// ISO/IEC 24778:2008
+
 import (
 	"fmt"
 	"image"
@@ -7,30 +9,27 @@ import (
 	"image/png"
 	"io"
 
+	"github.com/boombuler/barcode"
 	bc_aztec "github.com/boombuler/barcode/aztec"
 	"github.com/makiuchi-d/gozxing"
 	"github.com/makiuchi-d/gozxing/aztec"
 	"github.com/sfomuseum/go-bcbp"
 )
 
-/*
-
-> go run cmd/encode/main.go -data 'M1DOE/JOHN            EXYZ123 MELSFOUA 61   047C012D0001 1'
-[asc][asc@SD-931-4][8:38:04] /Users/asc/sfomuseum/go-bcbp                                                                                                                                                 > open barcode.png
-[asc][asc@SD-931-4][8:38:06] /Users/asc/sfomuseum/go-bcbp                                                                                                                                                 > go run cmd/decode/main.go ./barcode.png
-2025/02/21 08:38:18 Failed to decode barcode, NotFoundException: NotFoundException: NotFoundException: nbCenterLayers = 3
-exit status 1
-
-*/
-
 func Marshal(b *bcbp.BCBP, wr io.Writer) error {
 
 	data := []byte(b.String())
 
-	bc, err := bc_aztec.Encode(data, 33, 15)
+	bc, err := bc_aztec.Encode(data, 33, 0)
 
 	if err != nil {
 		return fmt.Errorf("Failed to encode barcode, %w", err)
+	}
+
+	bc, err = barcode.Scale(bc, 300, 300)
+
+	if err != nil {
+		return fmt.Errorf("Failed to scale barcode, %w", err)
 	}
 
 	return png.Encode(wr, bc)
