@@ -95,3 +95,4 @@ This code does not support decoding PDF417 barcodes yet.
 * https://github.com/martinmroz/iata_bcbp
 * https://github.com/boombuler/barcode
 * https://github.com/makiuchi-d/gozxing
+* https://se.au/notes/whats-contained-in-a-boarding-pass-barcode/
