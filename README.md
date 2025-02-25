@@ -78,6 +78,10 @@ func main()
 }
 ```
 
+## WebAssembly (WASM)
+
+* https://github.com/sfomuseum/go-bcbp-wasm
+
 ## Caveats and known-knowns
 
 ### Missing or invalid group separators for multi-leg strings
